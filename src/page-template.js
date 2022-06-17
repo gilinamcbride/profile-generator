@@ -1,13 +1,20 @@
+// const Manager = require("./lib/Manager");
+// const Intern = require("./lib/Intern");
+// const Engineer = require("./lib/Engineer");
+
 const generateManager = (employeeArray) => {
-  const manager = employeeArray.find((element) => element === "Manager");
-  const { name, id, email, officeNumber } = manager;
   return `
+    ${employeeArray
+      .filter((Engineer) => Engineer)
+      .map(({ name, id, email, officeNumber }) => {
+        return `
     <section
           class="employee-info card col col-lg-3 mx-4 shadow-lg p-3 mb-5 bg-body rounded"
         >
           <div class="card-header">
-            <h2 class="card-title pt-2 text-white fs-1">${name}</h2>
-            <p class="text-white fs-4">Manager</p>
+          <h2 class="card-title pt-2 text-white fs-1">${name}</h2>
+            <p class="text-white fs-4"><span class="icon"><i style="color: white" class="fa-solid fa-mug-hot"></i></span
+            >Manager</p>
           </div>
           <div class="card-body fs-5">
             <p class="card-text">ID: ${id}</p>
@@ -19,70 +26,75 @@ const generateManager = (employeeArray) => {
             </p>
             <p class="card-text">Office Number: ${officeNumber}</p>
           </div>
-        </section>
-    `;
+        </section>`;
+      })
+      .join("")}`;
 };
 
 const generateEngineer = (employeeArray) => {
-  // filter?
-  // loop
-  const { name, id, email, github } = engineer;
-  // need if statement to leave blank if no intern
   return `
-    <section
-          class="employee-info card col col-lg-3 mx-4 shadow-lg p-3 mb-5 bg-body rounded"
-        >
-          <div class="card-header">
-            <h2 class="card-title pt-2 text-white fs-1">${name}</h2>
-            <p class="text-white fs-4">Engineer</p>
-          </div>
-          <div class="card-body fs-5">
-            <p class="card-text">ID: ${id}</p>
-            <p class="card-text">
-              Email:
-              <a href="mailto:${email}" target="blank"
-                >${email}</a
-              >
-            </p>
-            <p class="card-text">
-              GitHub:
-              <a href="https://github.com/${github}" target="blank"
-                >${github}</a
-              >
-            </p>
-          </div>
-        </section>
-    `;
+  ${employeeArray
+    .filter((Engineer) => Engineer)
+    .map(({ name, id, email, github }) => {
+      return `
+        <section
+              class="employee-info card col col-lg-3 mx-4 shadow-lg p-3 mb-5 bg-body rounded"
+            >
+              <div class="card-header">
+              <h2 class="card-title pt-2 text-white fs-1">${name}</h2>
+                <p class="text-white fs-4"><span class="icon"><i style="color: white" class="fa-solid fa-glasses-round"></i></span
+                >Engineer</p>
+              </div>
+              <div class="card-body fs-5">
+                <p class="card-text">ID: ${id}</p>
+                <p class="card-text">
+                  Email:
+                  <a href="mailto:${email}" target="blank"
+                    >${email}</a
+                  >
+                </p>
+                <p class="card-text">
+                  GitHub:
+                  <a href="https://github.com/${github}" target="blank"
+                    >${github}</a
+                  >
+                </p>
+              </div>
+        </section>`;
+    })
+    .join("")}`;
 };
 
 const generateIntern = (employeeArray) => {
-  // filter?
-  // loop
-  const { name, id, email, school } = intern;
-  // need if statement to leave blank if no intern
   return `
-    <section
-          class="employee-info card col col-lg-3 mx-4 shadow-lg p-3 mb-5 bg-body rounded"
-        >
-          <div class="card-header">
+    ${employeeArray
+      .filter((Intern) => Intern)
+      .map(({ name, id, email, school }) => {
+        return `
+        <section
+            class="employee-info card col col-lg-3 mx-4 shadow-lg p-3 mb-5 bg-body rounded"
+            >
+            <div class="card-header">
             <h2 class="card-title pt-2 text-white fs-1">${name}</h2>
-            <p class="text-white fs-4">Intern</p>
-          </div>
-          <div class="card-body fs-5">
-            <p class="card-text">ID: ${id}</p>
-            <p class="card-text">
-              Email:
-              <a href="mailto:${email}" target="blank"
-                >${email}</a
-              >
-            </p>
-            <p class="card-text">School: ${school}</p>
-          </div>
-        </section>
-    `;
+            <p class="text-white fs-4"><span class="icon"><i style="color: white" class="fa-solid fa-user-graduate"></i></span
+            >Intern</p>
+            </div>
+            <div class="card-body fs-5">
+                <p class="card-text">ID: ${id}</p>
+                <p class="card-text">
+                Email:
+                <a href="mailto:${email}" target="blank"
+                    >${email}</a
+                >
+                </p>
+                <p class="card-text">School: ${school}</p>
+            </div>
+            </section>`;
+      })
+      .join("")}`;
 };
 
-const generatePage = () => {
+const generatePage = (employeeArray) => {
   return `
     <!DOCTYPE html>
     <html lang="en">
@@ -103,6 +115,7 @@ const generatePage = () => {
           href="https://fonts.googleapis.com/css2?family=Fira+Sans+Condensed&family=Satisfy&display=swap"
           rel="stylesheet"
         />
+        <script src="https://kit.fontawesome.com/e9af64bbdb.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="./src/style.css" />
       </head>
       <body>
@@ -111,9 +124,9 @@ const generatePage = () => {
         </header>
         <main class="container my-5 mx-auto">
           <div class="row justify-content-center">
-            ${generateManager()}
-            ${generateEngineer()}
-            ${generateIntern()}
+          ${generateManager(employeeArray)}
+          ${generateEngineer(employeeArray)}
+          ${generateIntern(employeeArray)}
           </div>
           </main>
         </body>

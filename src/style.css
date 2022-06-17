@@ -21,3 +21,7 @@ header h1 {
 .card-header {
   background-color: #1b0250;
 }
+
+.icon {
+  margin-right: 10px;
+}
