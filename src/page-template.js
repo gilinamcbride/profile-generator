@@ -1,6 +1,6 @@
-// const Manager = require("./lib/Manager");
-// const Intern = require("./lib/Intern");
-// const Engineer = require("./lib/Engineer");
+const Manager = require("../lib/Manager");
+const Intern = require("../lib/Intern");
+const Engineer = require("../lib/Engineer");
 
 const generateManager = (employeeArray) => {
   return `
@@ -124,9 +124,7 @@ const generatePage = (employeeArray) => {
         </header>
         <main class="container my-5 mx-auto">
           <div class="row justify-content-center">
-          ${generateManager(employeeArray)}
-          ${generateEngineer(employeeArray)}
-          ${generateIntern(employeeArray)}
+         
           </div>
           </main>
         </body>
@@ -134,4 +132,8 @@ const generatePage = (employeeArray) => {
     `;
 };
 
-module.exports = generatePage();
+module.exports = generatePage;
+
+// ${generateManager(employeeArray)}
+// ${generateEngineer(employeeArray)}
+// ${generateIntern(employeeArray)}

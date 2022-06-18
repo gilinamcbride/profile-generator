@@ -3,7 +3,7 @@ const Manager = require("./lib/Manager");
 const Intern = require("./lib/Intern");
 const Engineer = require("./lib/Engineer");
 const generatePage = require("./src/page-template.js");
-const { writeFile, copyFile } = require("./utils/generate-page.js");
+// const { writeFile, copyFile } = require("./utils/generate-page.js");
 
 const managerArray = [
   {
@@ -195,7 +195,8 @@ Team.prototype.askQuestions = function () {
         if (add === "Intern") {
           return this.getIntern();
         } else {
-          return this.team;
+          console.log(this.team);
+          return;
         }
       });
   });
@@ -222,7 +223,8 @@ Team.prototype.getEngineer = function () {
         if (add === "Intern") {
           this.getIntern();
         } else {
-          return this.team;
+          console.log(this.team);
+          return;
         }
       });
   });
@@ -249,16 +251,16 @@ Team.prototype.getIntern = function () {
         if (add === "Intern") {
           this.getIntern();
         } else {
-          return this.team;
+          console.log(this.team);
+          return;
         }
       });
   });
 };
 
-new Team().askQuestions();
-// .then((teamArr) => {
-//   return generatePage(teamArr);
-// })
+new Team().askQuestions().then((teamArr) => {
+  generatePage(teamArr);
+});
 // .then((pageHTML) => {
 //   return writeFile(pageHTML);
 // })
