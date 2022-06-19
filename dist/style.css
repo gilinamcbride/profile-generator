@@ -1,0 +1,27 @@
+* {
+  color: #1b0250;
+}
+
+body {
+  background-color: #e8d6fd;
+  font-family: "Fira Sans Condensed", sans-serif;
+}
+
+header {
+  margin: 10px;
+  border: 3px solid #1b0250;
+  color: #1b0250;
+}
+
+header h1 {
+  font-family: "Satisfy", cursive;
+  font-size: 50px;
+}
+
+.card-header {
+  background-color: #1b0250;
+}
+
+.icon {
+  margin-right: 10px;
+}

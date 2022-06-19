@@ -3,7 +3,8 @@ const Manager = require("./lib/Manager");
 const Intern = require("./lib/Intern");
 const Engineer = require("./lib/Engineer");
 const generatePage = require("./src/page-template.js");
-// const { writeFile, copyFile } = require("./utils/generate-page.js");
+const { writeFile, copyFile } = require("./utils/generate-page");
+// const fs = require("fs");
 
 const managerArray = [
   {
@@ -172,101 +173,77 @@ const internArray = [
 
 function Team() {
   this.team = [];
+  this.managerArray = [];
+  this.engineerArray = [];
+  this.internArray = [];
 }
 
 Team.prototype.askQuestions = function () {
-  inquirer.prompt(managerArray).then(({ name, id, email, officeNumber }) => {
-    this.team.push(new Manager(name, id, email, officeNumber));
-    inquirer
-      .prompt({
-        type: "list",
-        name: "add",
-        message: "Which type of team member would you like to add?",
-        choices: [
-          "Engineer",
-          "Intern",
-          "I don't want to add any more team members.",
-        ],
-      })
-      .then(({ add }) => {
-        if (add === "Engineer") {
-          return this.getEngineer();
-        }
-        if (add === "Intern") {
-          return this.getIntern();
-        } else {
-          console.log(this.team);
-          return;
-        }
-      });
-  });
+  return inquirer
+    .prompt(managerArray)
+    .then(({ name, id, email, officeNumber }) => {
+      this.team.push(new Manager(name, id, email, officeNumber));
+      this.getNewEmployee();
+    });
 };
 
 Team.prototype.getEngineer = function () {
-  inquirer.prompt(engineerArray).then(({ name, id, email, github }) => {
+  return inquirer.prompt(engineerArray).then(({ name, id, email, github }) => {
     this.team.push(new Engineer(name, id, email, github));
-    inquirer
-      .prompt({
-        type: "list",
-        name: "add",
-        message: "Which type of team member would you like to add?",
-        choices: [
-          "Engineer",
-          "Intern",
-          "I don't want to add any more team members.",
-        ],
-      })
-      .then(({ add }) => {
-        if (add === "Engineer") {
-          this.getEngineer();
-        }
-        if (add === "Intern") {
-          this.getIntern();
-        } else {
-          console.log(this.team);
-          return;
-        }
-      });
+    this.getNewEmployee();
   });
 };
 
 Team.prototype.getIntern = function () {
-  inquirer.prompt(internArray).then(({ name, id, email, school }) => {
+  return inquirer.prompt(internArray).then(({ name, id, email, school }) => {
     this.team.push(new Intern(name, id, email, school));
-    inquirer
-      .prompt({
-        type: "list",
-        name: "add",
-        message: "Which type of team member would you like to add?",
-        choices: [
-          "Engineer",
-          "Intern",
-          "I don't want to add any more team members.",
-        ],
-      })
-      .then(({ add }) => {
-        if (add === "Engineer") {
-          this.getEngineer();
-        }
-        if (add === "Intern") {
-          this.getIntern();
-        } else {
-          console.log(this.team);
-          return;
-        }
-      });
+    this.getNewEmployee();
   });
 };
 
-new Team().askQuestions().then((teamArr) => {
-  generatePage(teamArr);
-});
-// .then((pageHTML) => {
-//   return writeFile(pageHTML);
-// })
-// .then(() => {
-//   return copyFile();
-// })
-// .catch((err) => {
-//   console.log(err);
-// });
+Team.prototype.getNewEmployee = function () {
+  return inquirer
+    .prompt({
+      type: "list",
+      name: "add",
+      message: "Which type of team member would you like to add?",
+      choices: [
+        "Engineer",
+        "Intern",
+        "I don't want to add any more team members.",
+      ],
+    })
+    .then(({ add }) => {
+      if (add === "Engineer") {
+        this.getEngineer();
+      }
+      if (add === "Intern") {
+        this.getIntern();
+      }
+      if (add === "I don't want to add any more team members.") {
+        console.log("Done!");
+        console.log(this.team);
+        generatePage(this.team);
+        // TODO: this way it says generatePage.then isn't a fx
+        // .then((content) => {
+        //   return writeFile(content);
+        // })
+        // .then(copyFile);
+        // TODO: this way how is it getting the info from the generate page
+        // writeFile(this.team);
+      }
+    });
+};
+
+new Team()
+  // TODO: proble: calling write file before we get to the end of all of the questions
+  // it throws an error before asked if you want to add a team mate
+  .askQuestions()
+  .then((content) => {
+    // TODO: here it says info give to write file needs to be string and isn't
+    return writeFile(content);
+  })
+  .then(copyFile())
+  .catch((err) => {
+    console.log(err);
+  });

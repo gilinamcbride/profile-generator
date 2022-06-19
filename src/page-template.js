@@ -2,19 +2,56 @@ const Manager = require("../lib/Manager");
 const Intern = require("../lib/Intern");
 const Engineer = require("../lib/Engineer");
 
-const generateManager = (employeeArray) => {
-  return `
-    ${employeeArray
-      .filter((Engineer) => Engineer)
-      .map(({ name, id, email, officeNumber }) => {
-        return `
+function generateManager(managerArray) {
+  if (managerArray === []) {
+    return ``;
+  } else {
+    console.log(managerArray);
+    for (var i = 0; i < managerArray.length; i++) {
+      const { name, id, email, officeNumber } = managerArray[i];
+      console.log(name);
+      console.log(email);
+      return `
+    <section
+      class="employee-info card col col-lg-3 mx-4 shadow-lg p-3 mb-5 bg-body rounded"
+    >
+      <div class="card-header">
+      <h2 class="card-title pt-2 text-white fs-1">${name}</h2>
+        <p class="text-white fs-4"><span class="icon"><i style="color: white" class="fa-solid fa-mug-hot"></i></span
+        >Manager</p>
+      </div>
+      <div class="card-body fs-5">
+        <p class="card-text">ID: ${id}</p>
+        <p class="card-text">
+          Email:
+          <a href="mailto:${email}" target="blank"
+            >${email}</a
+          >
+        </p>
+        <p class="card-text">Office Number: ${officeNumber}</p>
+      </div>
+    </section>`;
+    }
+  }
+}
+
+function generateEngineer(engineerArray) {
+  if (engineerArray === []) {
+    return ``;
+  } else {
+    console.log(engineerArray);
+    for (var i = 0; i < engineerArray.length; i++) {
+      const { name, id, email, github } = engineerArray[i];
+      console.log(name);
+      console.log(github);
+      return `
     <section
           class="employee-info card col col-lg-3 mx-4 shadow-lg p-3 mb-5 bg-body rounded"
         >
           <div class="card-header">
           <h2 class="card-title pt-2 text-white fs-1">${name}</h2>
-            <p class="text-white fs-4"><span class="icon"><i style="color: white" class="fa-solid fa-mug-hot"></i></span
-            >Manager</p>
+            <p class="text-white fs-4"><span class="icon"><i style="color: white" class="fa-solid fa-glasses-round"></i></span
+            >Engineer</p>
           </div>
           <div class="card-body fs-5">
             <p class="card-text">ID: ${id}</p>
@@ -24,77 +61,70 @@ const generateManager = (employeeArray) => {
                 >${email}</a
               >
             </p>
-            <p class="card-text">Office Number: ${officeNumber}</p>
+            <p class="card-text">
+              GitHub:
+              <a href="https://github.com/${github}" target="blank"
+                >${github}</a
+              >
+            </p>
           </div>
-        </section>`;
-      })
-      .join("")}`;
-};
+    </section>
+  `;
+    }
+  }
+}
 
-const generateEngineer = (employeeArray) => {
-  return `
-  ${employeeArray
-    .filter((Engineer) => Engineer)
-    .map(({ name, id, email, github }) => {
+function generateIntern(internArray) {
+  if (internArray === []) {
+    return ``;
+  } else {
+    console.log(internArray);
+    for (var i = 0; i < internArray.length; i++) {
+      console.log(internArray[i]);
+      const { name, id, email, school } = internArray[i];
       return `
-        <section
-              class="employee-info card col col-lg-3 mx-4 shadow-lg p-3 mb-5 bg-body rounded"
-            >
-              <div class="card-header">
-              <h2 class="card-title pt-2 text-white fs-1">${name}</h2>
-                <p class="text-white fs-4"><span class="icon"><i style="color: white" class="fa-solid fa-glasses-round"></i></span
-                >Engineer</p>
-              </div>
-              <div class="card-body fs-5">
-                <p class="card-text">ID: ${id}</p>
-                <p class="card-text">
-                  Email:
-                  <a href="mailto:${email}" target="blank"
-                    >${email}</a
-                  >
-                </p>
-                <p class="card-text">
-                  GitHub:
-                  <a href="https://github.com/${github}" target="blank"
-                    >${github}</a
-                  >
-                </p>
-              </div>
-        </section>`;
-    })
-    .join("")}`;
-};
+      <section class="employee-info card col col-lg-3 mx-4 shadow-lg p-3 mb-5 bg-body rounded">
+      <div class="card-header">
+      <h2 class="card-title pt-2 text-white fs-1">${name}</h2>
+      <p class="text-white fs-4"><span class="icon"><i style="color: white" class="fa-solid fa-user-graduate"></i></span
+      >Intern</p>
+      </div>
+      <div class="card-body fs-5">
+          <p class="card-text">ID: ${id}</p>
+          <p class="card-text">
+          Email:
+          <a href="mailto:${email}" target="blank"
+              >${email}</a
+          >
+          </p>
+          <p class="card-text">School: ${school}</p>
+      </div>
+      </section>`;
+    }
+  }
+}
 
-const generateIntern = (employeeArray) => {
-  return `
-    ${employeeArray
-      .filter((Intern) => Intern)
-      .map(({ name, id, email, school }) => {
-        return `
-        <section
-            class="employee-info card col col-lg-3 mx-4 shadow-lg p-3 mb-5 bg-body rounded"
-            >
-            <div class="card-header">
-            <h2 class="card-title pt-2 text-white fs-1">${name}</h2>
-            <p class="text-white fs-4"><span class="icon"><i style="color: white" class="fa-solid fa-user-graduate"></i></span
-            >Intern</p>
-            </div>
-            <div class="card-body fs-5">
-                <p class="card-text">ID: ${id}</p>
-                <p class="card-text">
-                Email:
-                <a href="mailto:${email}" target="blank"
-                    >${email}</a
-                >
-                </p>
-                <p class="card-text">School: ${school}</p>
-            </div>
-            </section>`;
-      })
-      .join("")}`;
-};
-
-const generatePage = (employeeArray) => {
+function generatePage(employeeArray) {
+  console.log(employeeArray);
+  const managerArray = [];
+  const engineerArray = [];
+  const internArray = [];
+  for (var i = 0; i < employeeArray.length; i++) {
+    let employee = employeeArray[i];
+    let role = employee.getRole();
+    if (role === "Manager") {
+      managerArray.push(employee);
+      console.log(managerArray);
+    }
+    if (role === "Engineer") {
+      engineerArray.push(employee);
+      console.log(engineerArray);
+    }
+    if (role === "Intern") {
+      internArray.push(employee);
+      console.log(internArray);
+    }
+  }
   return `
     <!DOCTYPE html>
     <html lang="en">
@@ -124,16 +154,14 @@ const generatePage = (employeeArray) => {
         </header>
         <main class="container my-5 mx-auto">
           <div class="row justify-content-center">
-         
+          ${generateManager(managerArray)}
+          ${generateEngineer(engineerArray)}
+          ${generateIntern(internArray)}
           </div>
           </main>
         </body>
       </html>
     `;
-};
+}
 
 module.exports = generatePage;
-
-// ${generateManager(employeeArray)}
-// ${generateEngineer(employeeArray)}
-// ${generateIntern(employeeArray)}
