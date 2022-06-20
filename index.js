@@ -4,7 +4,6 @@ const Intern = require("./lib/Intern");
 const Engineer = require("./lib/Engineer");
 const generatePage = require("./src/page-template.js");
 const { writeFile, copyFile } = require("./utils/generate-page");
-// const fs = require("fs");
 
 const managerArray = [
   {
@@ -173,9 +172,6 @@ const internArray = [
 
 function Team() {
   this.team = [];
-  this.managerArray = [];
-  this.engineerArray = [];
-  this.internArray = [];
 }
 
 Team.prototype.askQuestions = function () {
@@ -216,34 +212,16 @@ Team.prototype.getNewEmployee = function () {
     .then(({ add }) => {
       if (add === "Engineer") {
         this.getEngineer();
-      }
-      if (add === "Intern") {
+      } else if (add === "Intern") {
         this.getIntern();
-      }
-      if (add === "I don't want to add any more team members.") {
-        console.log("Done!");
-        console.log(this.team);
-        generatePage(this.team);
-        // TODO: this way it says generatePage.then isn't a fx
-        // .then((content) => {
-        //   return writeFile(content);
-        // })
-        // .then(copyFile);
-        // TODO: this way how is it getting the info from the generate page
-        // writeFile(this.team);
+      } else if (add === "I don't want to add any more team members.") {
+        console.log(
+          "Your 'My Team' Page has been created! Checkout team.html in the dist directory!"
+        );
+        writeFile(generatePage(this.team));
+        copyFile();
       }
     });
 };
 
-new Team()
-  // TODO: proble: calling write file before we get to the end of all of the questions
-  // it throws an error before asked if you want to add a team mate
-  .askQuestions()
-  .then((content) => {
-    // TODO: here it says info give to write file needs to be string and isn't
-    return writeFile(content);
-  })
-  .then(copyFile())
-  .catch((err) => {
-    console.log(err);
-  });
+new Team().askQuestions();
