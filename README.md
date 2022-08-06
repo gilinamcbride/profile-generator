@@ -53,6 +53,10 @@ This application is a Command Line application that dynamically generates an HTM
 
 ## Application
 
+Example HTML Page Created:
+
+![screenshot](./utils/screenshot.png)
+
 [Link to video walkthrough](https://drive.google.com/file/d/1DnMAO2yTQlU9oTaVKtY5V3Q6muGxWS3E/view?usp=sharing)
 
 ## Questions?
